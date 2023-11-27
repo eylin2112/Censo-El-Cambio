@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{jefe.Habitante.nombre}}  {{jefe.Habitante.apellido}}</title>
+</head>
+<style>
+    img {
+       width: 30%; /* Puedes ajustar el porcentaje según tus necesidades */
+       display: block; /* Esto ayuda a centrar la imagen */
+       margin: auto;   /* Esto también ayuda a centrar la imagen */
+   }
+
+   body {
+       font-family: 'Times New Roman', Times, serif;
+   }
+   h3{
+    text-align: center;
+   }
+   h4{
+    text-align: center;
+   }
+
+   @page {
+       @bottom-center {
+           content: 'Sistema de Censo Poblacional "El Cambio I" - Página ' counter(page);
+           font-size: 10pt;
+           font-family: 'Times New Roman', Times, serif;
+
+       }
+   }
+</style>
+<body>
+    <img src="{% static 'img/logo-el-cambio.jpeg' %}" alt>
+    <br>
+    <h6 style="text-align:right;">Fecha: {{fecha}}</h6>
+    <hr>
+    <h3>Jefe Familiar: <h4>{{jefe.Habitante.nombre}} {{jefe.Habitante.segundoNombre}} {{jefe.Habitante.apellido}} {{jefe.Habitante.segundoApellido}} C.I: {{jefe.Habitante.cedula}}</h4></h3>
+    <hr>
+    <h3>Cargas Familiares</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-primary">
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Edad</th>
+                <th>Genero</th>
+                <th>Estado Civil</th>
+                <th>Discapacidad</th>
+                <th>Carnet de la patria</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for c in cargas %}
+                <tr>
+
+                    <td>{{c.Habitante.nombre}}</td>
+                    <td>{{c.Habitante.apellido}}</td>
+                    {% if c.Habitante.cedula == None %}
+                    <td>No tiene</td>
+                    {% else %}
+                    <td>{{ c.Habitante.cedula }}</td>
+                    {% endif %}
+                    <td>{{c.Habitante.edad}}</td>
+                    <td>{{c.Habitante.genero}}</td>
+                    <td>{{c.Habitante.estado_civil}}</td>
+                    <td>{{c.Habitante.discapacidad}}</td>
+                    {% if c.Habitante.carnet_patria == None %}
+                    <td>No tiene</td>
+                    {% else %}
+                    <td>{{ c.Habitante.carnet_patria }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+</body>
+</html>
